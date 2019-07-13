@@ -12,6 +12,10 @@
 		F9398EEE22DA6F5E00EC9431 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = F9398EEC22DA6F5E00EC9431 /* Main.storyboard */; };
 		F9398EF022DA6F6000EC9431 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = F9398EEF22DA6F6000EC9431 /* Assets.xcassets */; };
 		F9398EF322DA6F6000EC9431 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = F9398EF122DA6F6000EC9431 /* LaunchScreen.storyboard */; };
+		F9398EFD22DA707100EC9431 /* clsGPSTrack.swift in Sources */ = {isa = PBXBuildFile; fileRef = F9398EFC22DA707100EC9431 /* clsGPSTrack.swift */; };
+		F9398EFF22DA70D600EC9431 /* clsGPSPoint.swift in Sources */ = {isa = PBXBuildFile; fileRef = F9398EFE22DA70D600EC9431 /* clsGPSPoint.swift */; };
+		F9398F0122DA712800EC9431 /* clsGPXFileParse.swift in Sources */ = {isa = PBXBuildFile; fileRef = F9398F0022DA712800EC9431 /* clsGPXFileParse.swift */; };
+		F9398F0722DA7C2500EC9431 /* Test 32K Loop.gpx in Resources */ = {isa = PBXBuildFile; fileRef = F9398F0622DA7C2500EC9431 /* Test 32K Loop.gpx */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -22,6 +26,10 @@
 		F9398EEF22DA6F6000EC9431 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		F9398EF222DA6F6000EC9431 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		F9398EF422DA6F6000EC9431 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		F9398EFC22DA707100EC9431 /* clsGPSTrack.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = clsGPSTrack.swift; sourceTree = "<group>"; };
+		F9398EFE22DA70D600EC9431 /* clsGPSPoint.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = clsGPSPoint.swift; sourceTree = "<group>"; };
+		F9398F0022DA712800EC9431 /* clsGPXFileParse.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = clsGPXFileParse.swift; sourceTree = "<group>"; };
+		F9398F0622DA7C2500EC9431 /* Test 32K Loop.gpx */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xml; name = "Test 32K Loop.gpx"; path = "../../../../../Personal/2 - Shaw/1. Bikes/4. Route Maps/Test 32K Loop.gpx"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -58,8 +66,12 @@
 				F9398EEA22DA6F5E00EC9431 /* ViewController.swift */,
 				F9398EEC22DA6F5E00EC9431 /* Main.storyboard */,
 				F9398EEF22DA6F6000EC9431 /* Assets.xcassets */,
+				F9398F0622DA7C2500EC9431 /* Test 32K Loop.gpx */,
 				F9398EF122DA6F6000EC9431 /* LaunchScreen.storyboard */,
 				F9398EF422DA6F6000EC9431 /* Info.plist */,
+				F9398EFC22DA707100EC9431 /* clsGPSTrack.swift */,
+				F9398EFE22DA70D600EC9431 /* clsGPSPoint.swift */,
+				F9398F0022DA712800EC9431 /* clsGPXFileParse.swift */,
 			);
 			path = CourseProfiler;
 			sourceTree = "<group>";
@@ -122,6 +134,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				F9398F0722DA7C2500EC9431 /* Test 32K Loop.gpx in Resources */,
 				F9398EF322DA6F6000EC9431 /* LaunchScreen.storyboard in Resources */,
 				F9398EF022DA6F6000EC9431 /* Assets.xcassets in Resources */,
 				F9398EEE22DA6F5E00EC9431 /* Main.storyboard in Resources */,
@@ -137,6 +150,9 @@
 			files = (
 				F9398EEB22DA6F5E00EC9431 /* ViewController.swift in Sources */,
 				F9398EE922DA6F5E00EC9431 /* AppDelegate.swift in Sources */,
+				F9398EFF22DA70D600EC9431 /* clsGPSPoint.swift in Sources */,
+				F9398EFD22DA707100EC9431 /* clsGPSTrack.swift in Sources */,
+				F9398F0122DA712800EC9431 /* clsGPXFileParse.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
