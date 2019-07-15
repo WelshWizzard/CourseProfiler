@@ -16,6 +16,8 @@
 		F9398EFF22DA70D600EC9431 /* clsGPSPoint.swift in Sources */ = {isa = PBXBuildFile; fileRef = F9398EFE22DA70D600EC9431 /* clsGPSPoint.swift */; };
 		F9398F0122DA712800EC9431 /* clsGPXFileParse.swift in Sources */ = {isa = PBXBuildFile; fileRef = F9398F0022DA712800EC9431 /* clsGPXFileParse.swift */; };
 		F9398F0722DA7C2500EC9431 /* Test 32K Loop.gpx in Resources */ = {isa = PBXBuildFile; fileRef = F9398F0622DA7C2500EC9431 /* Test 32K Loop.gpx */; };
+		F93BCFA222DCABA100D11A3B /* clsAnalysisPoint.swift in Sources */ = {isa = PBXBuildFile; fileRef = F93BCFA122DCABA100D11A3B /* clsAnalysisPoint.swift */; };
+		F96A807122DCDD310030F195 /* clsAnalysisTrack.swift in Sources */ = {isa = PBXBuildFile; fileRef = F96A807022DCDD310030F195 /* clsAnalysisTrack.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -30,6 +32,8 @@
 		F9398EFE22DA70D600EC9431 /* clsGPSPoint.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = clsGPSPoint.swift; sourceTree = "<group>"; };
 		F9398F0022DA712800EC9431 /* clsGPXFileParse.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = clsGPXFileParse.swift; sourceTree = "<group>"; };
 		F9398F0622DA7C2500EC9431 /* Test 32K Loop.gpx */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xml; name = "Test 32K Loop.gpx"; path = "../../../../../Personal/2 - Shaw/1. Bikes/4. Route Maps/Test 32K Loop.gpx"; sourceTree = "<group>"; };
+		F93BCFA122DCABA100D11A3B /* clsAnalysisPoint.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = clsAnalysisPoint.swift; sourceTree = "<group>"; };
+		F96A807022DCDD310030F195 /* clsAnalysisTrack.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = clsAnalysisTrack.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -72,6 +76,8 @@
 				F9398EFC22DA707100EC9431 /* clsGPSTrack.swift */,
 				F9398EFE22DA70D600EC9431 /* clsGPSPoint.swift */,
 				F9398F0022DA712800EC9431 /* clsGPXFileParse.swift */,
+				F93BCFA122DCABA100D11A3B /* clsAnalysisPoint.swift */,
+				F96A807022DCDD310030F195 /* clsAnalysisTrack.swift */,
 			);
 			path = CourseProfiler;
 			sourceTree = "<group>";
@@ -149,7 +155,9 @@
 			buildActionMask = 2147483647;
 			files = (
 				F9398EEB22DA6F5E00EC9431 /* ViewController.swift in Sources */,
+				F93BCFA222DCABA100D11A3B /* clsAnalysisPoint.swift in Sources */,
 				F9398EE922DA6F5E00EC9431 /* AppDelegate.swift in Sources */,
+				F96A807122DCDD310030F195 /* clsAnalysisTrack.swift in Sources */,
 				F9398EFF22DA70D600EC9431 /* clsGPSPoint.swift in Sources */,
 				F9398EFD22DA707100EC9431 /* clsGPSTrack.swift in Sources */,
 				F9398F0122DA712800EC9431 /* clsGPXFileParse.swift in Sources */,

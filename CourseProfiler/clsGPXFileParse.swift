@@ -172,31 +172,33 @@ class GPXFile{
         print(GPXTrack.getTrackPoints().count)
     }
     
-    func readGPXXMLFile(filePath: String) {
-        //if let url = URL(string: filePath) {
-        //    do {
-        //        GPXFileContent = try String(contentsOf: url)
-        //    } catch {
-        //        // contents could not be loaded
-        //        GPXFileContent = ""
-        //    }
-        //} else {
-        //    //URL was bad
-        //    GPXFileContent = ""
-        //}
-        if let tmpfilepath = Bundle.main.path(forResource: "Test 32K Loop", ofType: "gpx")
-        {
+    func readGPXXMLFile(filePath: String)
+    {
+        if let url = URL(string: filePath) {
             do {
-                let contents = try String(contentsOfFile: tmpfilepath)
-                GPXFileContent = contents
+                GPXFileContent = try String(contentsOf: url)
             } catch {
                 // contents could not be loaded
                 GPXFileContent = ""
             }
         } else {
-            // example.txt not found!
+            //URL was bad
             GPXFileContent = ""
         }
+        
+//        if let tmpfilepath = Bundle.main.path(forResource: "Test 32K Loop", ofType: "gpx")
+//        {
+//            do {
+//                let contents = try String(contentsOfFile: tmpfilepath)
+//                GPXFileContent = contents
+//            } catch {
+//                // contents could not be loaded
+//                GPXFileContent = ""
+//            }
+//        } else {
+//            // example.txt not found!
+//            GPXFileContent = ""
+//        }
         
     }
 }
