@@ -21,6 +21,7 @@ class AnalysisTrack
     var ascent: Double = 0.0
     var decent: Double = 0.0
     var analysisTrackPoints: [AnalysisPoint] = []
+    let analysisPrecision: Double = 1.0
     
     func setAnalysisTrackName (trackname: String)
     {
@@ -74,24 +75,69 @@ class AnalysisTrack
             self.addAnalysisTrackPoint(aAnalysisTrackPoint: aGPXFile.GPXTrack.trackpoints[i])
         }
     }
+ 
+    func appendanalysispoint (aAnalysisPoint: AnalysisPoint)
+    {
+        let tmpAnalysisTrackPoint: AnalysisPoint = AnalysisPoint()
+        
+        tmpAnalysisTrackPoint.distanceBetween = aAnalysisPoint.distanceBetween
+        tmpAnalysisTrackPoint.elevationDifference = aAnalysisPoint.elevationDifference
+        tmpAnalysisTrackPoint.slope = aAnalysisPoint.slope
+        tmpAnalysisTrackPoint.elevation = aAnalysisPoint.elevation
+        tmpAnalysisTrackPoint.latitude = aAnalysisPoint.latitude
+        tmpAnalysisTrackPoint.longitude = aAnalysisPoint.longitude
+
+        self.analysisTrackPoints.append(tmpAnalysisTrackPoint)
+    }
     
     func addAnalysisTrackPoint (aAnalysisTrackPoint: GPSPoint)
     {
         let tmpAnalysisTrackPoint : AnalysisPoint = AnalysisPoint()
+        var tmpDistanceBetween : Double = 0.0
+        var tmpSlopeBetween : Double = 0.0
+        var tmpElevationBetween : Double = 0.0
+        var tmpElevationperprecision : Double = 0.0
+        var tmplastanalysisPoint : Int = 0
         
+        // Set local AnalysisPoint to passed through GPSPoint
         tmpAnalysisTrackPoint.setGPSPoint(longitude: aAnalysisTrackPoint.getLongitude(), latitude: aAnalysisTrackPoint.getLatitude(), elevation: aAnalysisTrackPoint.getElevation())
+  
+        // Check if it is the first analysis point
         if self.analysisTrackPoints.count > 0
         {
-            // If it is not the first then calculate
-            tmpAnalysisTrackPoint.calculateAnalysisFields(to: self.analysisTrackPoints[self.analysisTrackPoints.count - 1])
-            updateAnalysisSummaries(aAnalysisTrackPoint: tmpAnalysisTrackPoint)
-            if !((tmpAnalysisTrackPoint.distanceBetween == 0.0) && (tmpAnalysisTrackPoint.elevationDifference == 0.0))
+            // Work out subscript of the last trackpoint
+            tmplastanalysisPoint = self.analysisTrackPoints.count - 1
+            
+            // Calculate distance between last analysis point and new GPX Point
+            tmpDistanceBetween = self.analysisTrackPoints[tmplastanalysisPoint].distancefromnanotherpoint(to: tmpAnalysisTrackPoint)
+            
+            //Calculate elevation difference
+            tmpElevationBetween = self.analysisTrackPoints[tmplastanalysisPoint].elevationdifferencefromanotherpoint(to: tmpAnalysisTrackPoint)
+            
+            //Calculate the slope between both points
+            tmpSlopeBetween = (tmpElevationBetween / tmpDistanceBetween) * 100.0
+
+            //Work out the evevation change over the analysisPrecision distance
+            tmpElevationperprecision = (analysisPrecision / tmpDistanceBetween) * tmpElevationBetween
+        
+            while tmpDistanceBetween > analysisPrecision
             {
-                self.analysisTrackPoints.append(tmpAnalysisTrackPoint)
+                // If it is not the first then calculate
+                tmpAnalysisTrackPoint.distanceBetween = analysisPrecision
+                tmpAnalysisTrackPoint.slope = 0 - tmpSlopeBetween
+                tmpAnalysisTrackPoint.elevation = self.analysisTrackPoints[tmplastanalysisPoint].elevation - tmpElevationperprecision
+                tmpAnalysisTrackPoint.elevationDifference = 0 - tmpElevationperprecision
+
+                updateAnalysisSummaries(aAnalysisTrackPoint: tmpAnalysisTrackPoint)
+                appendanalysispoint(aAnalysisPoint: tmpAnalysisTrackPoint)
+                
+                tmpDistanceBetween -= analysisPrecision
+                tmplastanalysisPoint += 1
             }
         }
         else
         {
+            //First point so manually set analysis summary points
             self.analysisMaxElevation = aAnalysisTrackPoint.getElevation()
             self.analysisMinElevation = aAnalysisTrackPoint.getElevation()
             self.analysisTrackPoints.append(tmpAnalysisTrackPoint)
