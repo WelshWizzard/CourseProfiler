@@ -18,6 +18,8 @@ class AnalysisTrack
     var analysisTrackDistance: Double = 0.0
     var analysisMaxSlope: Double = 0.0
     var analysisMinSlope: Double = 0.0
+    var ascent: Double = 0.0
+    var decent: Double = 0.0
     var analysisTrackPoints: [AnalysisPoint] = []
     
     func setAnalysisTrackName (trackname: String)
@@ -43,6 +45,7 @@ class AnalysisTrack
         {
             self.analysisMinElevation = aAnalysisTrackPoint.elevation
         }
+        
         if aAnalysisTrackPoint.slope > self.analysisMaxSlope
         {
             self.analysisMaxSlope = aAnalysisTrackPoint.slope
@@ -51,6 +54,14 @@ class AnalysisTrack
         if aAnalysisTrackPoint.slope < self.analysisMinSlope
         {
             self.analysisMinSlope = aAnalysisTrackPoint.slope
+        }
+        
+        if aAnalysisTrackPoint.elevationDifference > 0
+        {
+            ascent += aAnalysisTrackPoint.elevationDifference
+        } else
+        {
+            decent += aAnalysisTrackPoint.elevationDifference
         }
         
     }
@@ -74,15 +85,17 @@ class AnalysisTrack
             // If it is not the first then calculate
             tmpAnalysisTrackPoint.calculateAnalysisFields(to: self.analysisTrackPoints[self.analysisTrackPoints.count - 1])
             updateAnalysisSummaries(aAnalysisTrackPoint: tmpAnalysisTrackPoint)
+            if !((tmpAnalysisTrackPoint.distanceBetween == 0.0) && (tmpAnalysisTrackPoint.elevationDifference == 0.0))
+            {
+                self.analysisTrackPoints.append(tmpAnalysisTrackPoint)
+            }
         }
         else
         {
             self.analysisMaxElevation = aAnalysisTrackPoint.getElevation()
             self.analysisMinElevation = aAnalysisTrackPoint.getElevation()
+            self.analysisTrackPoints.append(tmpAnalysisTrackPoint)
         }
-        
-        // Add the analysis point
-        self.analysisTrackPoints.append(tmpAnalysisTrackPoint)
     }
     
 }

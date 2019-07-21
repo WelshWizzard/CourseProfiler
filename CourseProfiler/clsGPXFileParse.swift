@@ -112,7 +112,7 @@ class GPXFile{
         while GPXFileContent.count > 0 {
             // Parse next section of the files stored in the string
             tmpString = parseGPXSection()
-            
+    
             if intrkSection == false {
                 // Not in a trk section so loop around until we are
                 if checkforSection(tmpString: tmpString, sectiontype: "trk") == true {
@@ -172,33 +172,45 @@ class GPXFile{
         print(GPXTrack.getTrackPoints().count)
     }
     
-    func readGPXXMLFile(filePath: String)
+    func tstReadfromWeb(filePath: String)
     {
-        if let url = URL(string: filePath) {
-            do {
+        if let url = URL(string: filePath)
+        {
+            do
+            {
                 GPXFileContent = try String(contentsOf: url)
+            } catch
+            {
+                // contents could not be loaded
+                GPXFileContent = ""
+            }
+        } else
+        {
+            //URL was bad
+            GPXFileContent = ""
+        }
+    }
+    
+    func tstReadfromFile()
+    {
+        if let tmpfilepath = Bundle.main.path(forResource: "Test 32K Loop", ofType: "gpx")
+        {
+            do {
+                let contents = try String(contentsOfFile: tmpfilepath)
+                GPXFileContent = contents
             } catch {
                 // contents could not be loaded
                 GPXFileContent = ""
             }
         } else {
-            //URL was bad
+            // example.txt not found!
             GPXFileContent = ""
         }
-        
-//        if let tmpfilepath = Bundle.main.path(forResource: "Test 32K Loop", ofType: "gpx")
-//        {
-//            do {
-//                let contents = try String(contentsOfFile: tmpfilepath)
-//                GPXFileContent = contents
-//            } catch {
-//                // contents could not be loaded
-//                GPXFileContent = ""
-//            }
-//        } else {
-//            // example.txt not found!
-//            GPXFileContent = ""
-//        }
-        
+    }
+    
+    func readGPXXMLFile(filePath: String)
+    {
+        tstReadfromWeb(filePath: filePath)
+        //tstReadfromFile()
     }
 }

@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		F91DA49322DD2EA0001BCCF3 /* objGraph.swift in Sources */ = {isa = PBXBuildFile; fileRef = F91DA49222DD2EA0001BCCF3 /* objGraph.swift */; };
 		F9398EE922DA6F5E00EC9431 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = F9398EE822DA6F5E00EC9431 /* AppDelegate.swift */; };
 		F9398EEB22DA6F5E00EC9431 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F9398EEA22DA6F5E00EC9431 /* ViewController.swift */; };
 		F9398EEE22DA6F5E00EC9431 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = F9398EEC22DA6F5E00EC9431 /* Main.storyboard */; };
@@ -21,6 +22,7 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		F91DA49222DD2EA0001BCCF3 /* objGraph.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = objGraph.swift; sourceTree = "<group>"; };
 		F9398EE522DA6F5E00EC9431 /* CourseProfiler.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = CourseProfiler.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		F9398EE822DA6F5E00EC9431 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		F9398EEA22DA6F5E00EC9431 /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
@@ -78,6 +80,7 @@
 				F9398F0022DA712800EC9431 /* clsGPXFileParse.swift */,
 				F93BCFA122DCABA100D11A3B /* clsAnalysisPoint.swift */,
 				F96A807022DCDD310030F195 /* clsAnalysisTrack.swift */,
+				F91DA49222DD2EA0001BCCF3 /* objGraph.swift */,
 			);
 			path = CourseProfiler;
 			sourceTree = "<group>";
@@ -160,6 +163,7 @@
 				F96A807122DCDD310030F195 /* clsAnalysisTrack.swift in Sources */,
 				F9398EFF22DA70D600EC9431 /* clsGPSPoint.swift in Sources */,
 				F9398EFD22DA707100EC9431 /* clsGPSTrack.swift in Sources */,
+				F91DA49322DD2EA0001BCCF3 /* objGraph.swift in Sources */,
 				F9398F0122DA712800EC9431 /* clsGPXFileParse.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
