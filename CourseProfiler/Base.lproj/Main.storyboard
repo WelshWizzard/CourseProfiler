@@ -31,7 +31,7 @@
                                     <constraint firstAttribute="width" constant="150" id="q1t-jr-AJx"/>
                                 </constraints>
                                 <fontDescription key="fontDescription" style="UICTFontTextStyleTitle2"/>
-                                <state key="normal" title="Load from Web">
+                                <state key="normal" title="Internal File">
                                     <color key="titleColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                     <color key="titleShadowColor" white="0.66666666669999997" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 </state>
@@ -68,7 +68,7 @@
                                 <nil key="textColor"/>
                                 <nil key="highlightedColor"/>
                             </label>
-                            <slider opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" minValue="0.0" maxValue="100" translatesAutoresizingMaskIntoConstraints="NO" id="0tP-8m-ibd">
+                            <slider opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" value="100" minValue="0.0" maxValue="100" translatesAutoresizingMaskIntoConstraints="NO" id="0tP-8m-ibd">
                                 <rect key="frame" x="18" y="358" width="184" height="31"/>
                                 <constraints>
                                     <constraint firstAttribute="width" constant="180" id="y3U-bQ-92y"/>
@@ -97,11 +97,28 @@
                                     <action selector="btnLoadFromFile:" destination="BYZ-38-t0r" eventType="touchUpInside" id="hDN-JS-87L"/>
                                 </connections>
                             </button>
+                            <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="e2X-UQ-NdM">
+                                <rect key="frame" x="20" y="505" width="374" height="377"/>
+                                <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                <prototypes>
+                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" reuseIdentifier="cellReuseIdentifier" id="VQF-gh-gA2">
+                                        <rect key="frame" x="0.0" y="28" width="374" height="44"/>
+                                        <autoresizingMask key="autoresizingMask"/>
+                                        <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="VQF-gh-gA2" id="A7X-AP-6C7">
+                                            <rect key="frame" x="0.0" y="0.0" width="374" height="43.5"/>
+                                            <autoresizingMask key="autoresizingMask"/>
+                                        </tableViewCellContentView>
+                                    </tableViewCell>
+                                </prototypes>
+                            </tableView>
                         </subviews>
                         <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                         <constraints>
                             <constraint firstItem="fKW-20-evO" firstAttribute="centerX" secondItem="8bC-Xf-vdC" secondAttribute="centerX" id="3vh-Lk-7C1"/>
+                            <constraint firstItem="e2X-UQ-NdM" firstAttribute="top" secondItem="EpR-8G-5ni" secondAttribute="bottom" constant="20" id="4IP-1r-VKW"/>
                             <constraint firstItem="P3a-Ux-ETP" firstAttribute="top" secondItem="B8e-7U-XNE" secondAttribute="bottom" constant="10" id="7L9-gZ-Rmj"/>
+                            <constraint firstItem="6Tk-OE-BBY" firstAttribute="trailing" secondItem="e2X-UQ-NdM" secondAttribute="trailing" constant="20" id="CCU-EV-FTA"/>
+                            <constraint firstItem="e2X-UQ-NdM" firstAttribute="centerX" secondItem="8bC-Xf-vdC" secondAttribute="centerX" id="DvY-gj-A54"/>
                             <constraint firstItem="6Tk-OE-BBY" firstAttribute="trailing" secondItem="B8e-7U-XNE" secondAttribute="trailing" constant="20" id="Jaj-rl-zzZ"/>
                             <constraint firstItem="6Tk-OE-BBY" firstAttribute="trailing" secondItem="B8e-7U-XNE" secondAttribute="trailing" constant="20" id="Lqg-sa-7S9"/>
                             <constraint firstItem="6Tk-OE-BBY" firstAttribute="trailing" secondItem="B8e-7U-XNE" secondAttribute="trailing" constant="20" id="OWR-ad-L6v"/>
@@ -120,7 +137,9 @@
                             <constraint firstItem="fKW-20-evO" firstAttribute="top" secondItem="6Tk-OE-BBY" secondAttribute="top" constant="20" id="jvU-g0-MsA"/>
                             <constraint firstItem="6Tk-OE-BBY" firstAttribute="trailing" secondItem="B8e-7U-XNE" secondAttribute="trailing" constant="20" id="l3r-hS-9Bt"/>
                             <constraint firstItem="EpR-8G-5ni" firstAttribute="top" secondItem="hkd-8f-mkV" secondAttribute="bottom" constant="30" id="lMg-FH-CMc"/>
+                            <constraint firstItem="e2X-UQ-NdM" firstAttribute="bottom" secondItem="6Tk-OE-BBY" secondAttribute="bottom" constant="20" id="lRZ-GA-t8x"/>
                             <constraint firstItem="YKo-cP-oDA" firstAttribute="centerX" secondItem="8bC-Xf-vdC" secondAttribute="centerX" id="ljx-va-vFL"/>
+                            <constraint firstItem="e2X-UQ-NdM" firstAttribute="leading" secondItem="6Tk-OE-BBY" secondAttribute="leading" constant="20" id="mBV-h6-ySx"/>
                             <constraint firstItem="YKo-cP-oDA" firstAttribute="leading" secondItem="6Tk-OE-BBY" secondAttribute="leading" constant="20" id="okM-9K-Dkz"/>
                             <constraint firstItem="6Tk-OE-BBY" firstAttribute="trailing" secondItem="P3a-Ux-ETP" secondAttribute="trailing" constant="81" id="pda-y8-pFK"/>
                             <constraint firstItem="EpR-8G-5ni" firstAttribute="leading" secondItem="6Tk-OE-BBY" secondAttribute="leading" constant="20" id="sea-r0-H5t"/>
@@ -134,6 +153,7 @@
                         <outlet property="myStatusLabel" destination="YKo-cP-oDA" id="5uq-zu-apA"/>
                         <outlet property="myslider" destination="B8e-7U-XNE" id="lk3-Rb-BvH"/>
                         <outlet property="sldrScale" destination="0tP-8m-ibd" id="7dd-k2-JNd"/>
+                        <outlet property="statsTableView" destination="e2X-UQ-NdM" id="A6N-iK-BSr"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>

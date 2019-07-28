@@ -15,189 +15,158 @@ class GPXFile{
     var GPXFileContent: String = ""
     var GPXTrack: GPSTrack = GPSTrack()
     
-    func parseGPXSection() -> String {
-        var tmpStr = ""
-        var inSection = false
-        var filePosition = 0
+    
+    func processSAX()->GPSTrack {
         
-        for chars in GPXFileContent
-        {
-            filePosition += 1
-            if filePosition == 1 {
-                //first character of the string
-                if chars == "<" {
-                    inSection = true
-                }
-                else {
-                    inSection = false
-                    tmpStr.append(chars)
-                }
-            } else {
-                if inSection == true {
-                    if chars == ">" {
-                        //Got to the end of the inSection
-                        GPXFileContent.removeFirst(filePosition)
-                        return tmpStr
-                    } else {
-                        // still in inSection
-                        tmpStr.append(chars)
+        class xmlParserDelegate:NSObject, XMLParserDelegate {
+            
+            var in_gpx=false
+            var in_ele=false
+            var in_trk=false
+            var in_time=false
+            var in_name=false
+            var in_trkseg=false
+            var in_trkpt = false
+            let tmpGPSTrack: GPSTrack = GPSTrack()
+            let tmpGPSPoint : GPSPoint = GPSPoint()
+            
+            func parser(_ parser: XMLParser,
+                        didStartElement elementName: String,
+                        namespaceURI: String?, qualifiedName qName: String?,
+                        attributes attributeDict: [String : String] = [:]){
+                
+                switch elementName
+                {
+                case "gpx" : print("* gpx start element", elementName)
+                case "trk" : print("* trk start element", elementName)
+                case "name" : do {
+                    print("* name start element", elementName)
+                    self.in_name = true
                     }
-                } else {
-                    if chars == "<" {
-                        //Got to the start of a new inSection - dont remove the <
-                        GPXFileContent.removeFirst(filePosition-1)
-                        return tmpStr
-                    } else {
-                        // Still out of section
-                        tmpStr.append(chars)
+                case "trkseg" : do {
+                    print("* trkseg start element", elementName)
+                    self.in_trkseg = true
+                    }
+                case "trkpt" : do {
+                    print("* trkpt start element", elementName)
+                    self.in_trkpt = true
+                    }
+                case "ele" : do {
+                    print("* ele start element", elementName)
+                    self.in_ele = true
+                    }
+                case "time" : do {
+                    print("* time start element", elementName)
+                    self.in_time = true
+                    }
+                default : print("* UNKNOWN element", elementName)
+                }
+                
+                //Attribute
+                for (name,val) in attributeDict
+                {
+                    if (in_trkpt == true)
+                    {
+                        switch name
+                        {
+                        case "lat" : tmpGPSPoint.setLatitude(latitude: (val as NSString).doubleValue )
+                        case "lon" : tmpGPSPoint.setLongitude(longitude: (val as NSString).doubleValue)
+                        default : print("** unknown attribute", name)
+                        }
                     }
                 }
             }
             
-        }
-        // Got here as we have got to the end of the file
-        GPXFileContent.removeAll()
-        return tmpStr
-    }
-    
-    func extractLat (tmpString: String) -> Double {
-        var extractedString : String = ""
-        var numberofquotes = 0
-        
-        for chars in tmpString{
-            if chars == "\"" {
-                numberofquotes += 1
-            } else {
-                if numberofquotes == 1 {
-                    extractedString.append(chars)
-                }
-            }
-        }
-        return  (extractedString as NSString).doubleValue
-    }
-    
-    func extractLon (tmpString: String) -> Double {
-        var extractedString : String = ""
-        var numberofquotes = 0
-        
-        for chars in tmpString{
-            if chars == "\"" {
-                numberofquotes += 1
-            } else {
-                if numberofquotes == 3 {
-                    extractedString.append(chars)
-                }
-            }
-        }
-        return  (extractedString as NSString).doubleValue
-    }
-    
-    func checkforSection (tmpString : String, sectiontype: String) -> Bool {
-        if tmpString.hasPrefix(sectiontype) == true {
-            return true
-        } else {
-            return false
-        }
-    }
-    
-    func parseGPXFileContent() {
-        var tmpString : String = ""
-        var intrkSection : Bool = false
-        var innameSection : Bool = false
-        var intrksegSection : Bool = false
-        var ineleSection : Bool = false
-        var intimeSection : Bool = false
-        let tmpGPSPoint : GPSPoint = GPSPoint()
-        
-        while GPXFileContent.count > 0 {
-            // Parse next section of the files stored in the string
-            tmpString = parseGPXSection()
-    
-            if intrkSection == false {
-                // Not in a trk section so loop around until we are
-                if checkforSection(tmpString: tmpString, sectiontype: "trk") == true {
-                    intrkSection = true
-                }
-            } else {
-                // In trk Section
-                // Check if in a trkseg section
-                if intrksegSection == true {
-                    //intrkseg Section
-                    // Check if we are in elevation section
-                    if ineleSection == true {
-                        if checkforSection(tmpString: tmpString, sectiontype: "/ele") {
-                            ineleSection = false
-                        } else {
-                            tmpGPSPoint.setElevation(elevation: (tmpString as NSString).doubleValue)
-                        }
-                    } else if intimeSection == true {
-                        if checkforSection(tmpString: tmpString, sectiontype: "/time") {
-                            intimeSection = false
-                        } else {
-                            //Not processing time labels at the moment
-                        }
-                    } else if checkforSection(tmpString: tmpString, sectiontype: "ele") {
-                        ineleSection = true
-                    } else if checkforSection(tmpString: tmpString, sectiontype: "time") {
-                        intimeSection = true
-                    } else if checkforSection(tmpString: tmpString, sectiontype: "trkpt") {
-                        tmpGPSPoint.setLatitude(latitude: extractLat(tmpString: tmpString))
-                        tmpGPSPoint.setLongitude(longitude: extractLon(tmpString: tmpString))
-                    } else if checkforSection(tmpString: tmpString, sectiontype: "/trkpt") {
-                        //End of trkpt section
-                        GPXTrack.addTrackPoint(aTrackPoint: tmpGPSPoint)
-                        print(tmpGPSPoint.getLongitude()," ",tmpGPSPoint.getLatitude()," ",tmpGPSPoint.getElevation())
-                    } else {
-                        //Must be a blank line
+            func parser(_ parser: XMLParser,
+                        didEndElement elementName: String,
+                        namespaceURI: String?, qualifiedName qName: String?){
+                
+                switch elementName
+                {
+                case "gpx" : print("*** gpx end element", elementName)
+                case "trk" : print("*** trk end element", elementName)
+                case "name" : do {
+                    print("*** name end element", elementName)
+                    self.in_name = false
                     }
-                } else if innameSection == true {
-                    //It will be either /name or the name string between
-                    if checkforSection(tmpString: tmpString, sectiontype: "/name") {
-                        innameSection = false
-                    } else {
-                        GPXTrack.setTrackName(trackname: tmpString)
+                case "trkseg" : do {
+                    print("*** trkseg end element", elementName)
+                    self.in_trkseg = false
                     }
-                } else if checkforSection(tmpString: tmpString, sectiontype: "name") {
-                    // start of name section
-                    innameSection = true
-                } else if checkforSection(tmpString: tmpString, sectiontype: "trkseg") {
-                    // start of trkseg section
-                    intrksegSection = true
-                } else {
-                    // must be blank
+                case "trkpt" : do {
+                    print("*** trkpt end element", elementName)
+                    self.in_trkpt = false
+                    tmpGPSTrack.addTrackPoint(aTrackPoint: tmpGPSPoint)
+                    }
+                case "ele" : do {
+                    print("*** ele end element", elementName)
+                    self.in_ele = false
+                    }
+                case "time" : do {
+                    print("*** time end element", elementName)
+                    self.in_time = false
+                    }
+                default : print("*** UNKNOWN end element", elementName)
                 }
             }
-        }
-        print(GPXTrack.getTrackName())
-        print(GPXTrack.getTrackPoints().count)
-    }
-    
-    func tstReadfromWeb(filePath: String)
-    {
-        if let url = URL(string: filePath)
-        {
-            do
-            {
-                GPXFileContent = try String(contentsOf: url)
-            } catch
-            {
-                // contents could not be loaded
-                GPXFileContent = ""
+            
+            func parser(_ parser: XMLParser,
+                        foundCharacters string: String){
+                let s=string.trimmingCharacters(in: .whitespacesAndNewlines)
+                if s.count>0
+                {
+                    if (in_name == true)
+                    {
+                        tmpGPSTrack.setTrackName(trackname: s)
+                        print("** course name", s)
+                    }
+                    
+                    if (in_ele == true)
+                    {
+                        tmpGPSPoint.setElevation(elevation: (s as NSString).doubleValue )
+                        print("** elevation",s)
+                    }
+                    
+                    if (in_time == true)
+                    {
+                        print("** time",s)
+                    }
+                    
+                }
+                //lastNodeWasText=true
             }
-        } else
-        {
-            //URL was bad
-            GPXFileContent = ""
+            
+            public func parserDidEndDocument(_ parser: XMLParser){
+                print ("**** End of document")
+            }
+            
+            func parser(_ parser: XMLParser,
+                        parseErrorOccurred parseError: Error){
+                print("** parseErrorOccurred:\(parseError)")
+            }
+            
+            func parser(_ parser: XMLParser,
+                        validationErrorOccurred validationError: Error){
+                print("** validationErrorOccurred:\(validationError)")
+            }
         }
+        
+        let myDelegate=xmlParserDelegate()
+        let parser=XMLParser(data: GPXFileContent.data(using: .utf16)!)
+        parser.delegate = myDelegate
+        parser.parse()
+        return myDelegate.tmpGPSTrack
     }
     
-    func tstReadfromFile()
+    func InternalReadFromFile ()
     {
         if let tmpfilepath = Bundle.main.path(forResource: "Test 32K Loop", ofType: "gpx")
         {
             do {
                 let contents = try String(contentsOfFile: tmpfilepath)
+                print("In Read", tmpfilepath)
                 GPXFileContent = contents
+                GPXTrack = processSAX()
             } catch {
                 // contents could not be loaded
                 GPXFileContent = ""
@@ -208,9 +177,17 @@ class GPXFile{
         }
     }
     
-    func readGPXXMLFile(filePath: String)
+    func ReadFromFile(filePath: String)
     {
-        tstReadfromWeb(filePath: filePath)
-        //tstReadfromFile()
+        do {
+            let contents = try String(contentsOfFile: filePath)
+                print("In Read", filePath)
+                GPXFileContent = contents
+                GPXTrack = processSAX()
+            } catch {
+                 //contents could not be loaded
+                GPXFileContent = ""
+            }
     }
+    
 }

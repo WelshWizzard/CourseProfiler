@@ -12,7 +12,7 @@ class objGraph: UIView
 {
     var tmpAnalysisTrack: AnalysisTrack = AnalysisTrack()
     var tmpstartingposition: Int = 0
-    var tmpscaling: Int = 0
+    var tmpscaling: Int = 100
     var tmpColourArray = [CGColor]()
     var YScaling: Double = 0.0
     var YOffset: Int = 0
@@ -100,7 +100,6 @@ class objGraph: UIView
         // Add 20% - 10% on bottom and 10% on top
         YScaling = Double(context.size.height) / ((tmpAnalysisTrack.analysisMaxElevation - tmpAnalysisTrack.analysisMinElevation) * 1.2)
         YOffset = Int(((tmpAnalysisTrack.analysisMinElevation) * 0.9) * YScaling)
-        
     }
     
     func setXScaling(context: CGRect)
@@ -115,6 +114,8 @@ class objGraph: UIView
     
     public override func draw(_ rect: CGRect)
     {
+        var tmpElevation: Double = 0.0
+        
         guard let context = UIGraphicsGetCurrentContext() else { return }
         
         if (tmpAnalysisTrack.analysisTrackPoints.count) == 0
@@ -128,15 +129,17 @@ class objGraph: UIView
             setXScaling(context: rect)
             
             context.setLineWidth(XWidth)
-            
             for i in 0..<Int(rect.size.width)
             {
                 if (Int(Double(i) * XScaling) + XOffset) < tmpAnalysisTrack.analysisTrackPoints.count
                 {
                     context.move(to: CGPoint(x: i, y: Int(rect.size.height)))
                     context.setStrokeColor( slopetocolour(slope: Int(tmpAnalysisTrack.analysisTrackPoints[(Int(Double(i) * XScaling) + XOffset)].getslope())) )
-                    context.addLine(to: CGPoint(x: i, y: Int(rect.size.height) - Int(( tmpAnalysisTrack.analysisTrackPoints[(Int(Double(i) * XScaling) + XOffset)].getElevation()) * YScaling) + YOffset ))
                     
+                    tmpElevation = tmpAnalysisTrack.analysisTrackPoints[(Int(Double(i) * XScaling) + XOffset)].getElevation()
+                    tmpElevation *= YScaling
+                    
+                    context.addLine(to: CGPoint(x: i, y: Int(rect.size.height) - Int(round(tmpElevation)) + YOffset ))
                     context.strokePath()
                 }
 

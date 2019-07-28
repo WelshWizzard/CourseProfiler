@@ -20,9 +20,23 @@ class AnalysisTrack
     var analysisMinSlope: Double = 0.0
     var ascent: Double = 0.0
     var decent: Double = 0.0
+    var difficulty: Double = 0.0
     var analysisTrackPoints: [AnalysisPoint] = []
     let analysisPrecision: Double = 1.0
     
+    func empty()
+    {
+        self.analysisTrackPoints.removeAll(keepingCapacity: false)
+        self.analysisTrackName = ""
+        self.analysisMaxElevation = 0.0
+        self.analysisMinElevation = 0.0
+        self.analysisTrackDistance = 0.0
+        self.analysisMaxSlope = 0.0
+        self.analysisMinSlope = 0.0
+        self.difficulty = 0.0
+        self.ascent = 0.0
+        self.decent = 0.0
+    }
     func setAnalysisTrackName (trackname: String)
     {
         self.analysisTrackName = trackname
@@ -60,6 +74,7 @@ class AnalysisTrack
         if aAnalysisTrackPoint.elevationDifference > 0
         {
             ascent += aAnalysisTrackPoint.elevationDifference
+            difficulty += (aAnalysisTrackPoint.slope * aAnalysisTrackPoint.distanceBetween)
         } else
         {
             decent += aAnalysisTrackPoint.elevationDifference
